@@ -1,0 +1,43 @@
+\section{Monte Carlo Dropout}
+\label{sec:mcd}
+
+\emph{Dropout} is a regularization technique for multi-layer perceptrons intended to break co-adaptations of neurons and improve prediction performance \citep{hintonDropout2012}. It can be interpreted as a simplified ensemble method and applied as an efficient uncertainty quantification method.
+
+\subsection{Dropout Mechanism}
+\label{sec:dropout-mechanism}
+
+Given the same data and a complex enough network, different weight configurations lead to approximately the same, nearly perfect performance on the training set. For some weight configurations, each neuron extracts information from the input object that is only useful in combination with information provided by several other neurons \citep{hintonDropout2012}. \cite{srivastavaDropout2014} argued that complex co-adaptations might work well on the training set, but do not generalize well. Therefore, each neuron should be encouraged to learn to extract information that is useful on its own or in a smaller context.
+
+We can break complex co-adaptations by temporarily dropping subsets of neurons from each fully connected layer during training. Suppose the $l$-th and $(l+1)$-th layers of a network are fully connected layers with $D_l$ and $D_{l+1}$ neurons, respectively. Let $\vec{z}^{(l-1)} \in \RR^{D_{l-1}}$ be the input to the $l$-th layer. In a forward pass, the two layers compute
+\begin{align*}
+  \vec{z}^{(l)} &\defeq g\left( \mat{W}^{(l)} \vec{z}^{(l-1)} + \vec{b}^{(l)}  \right), \\
+  \vec{z}^{(l+1)} &\defeq g\left( \mat{W}^{(l+1)} \vec{z}^{(l)} + \vec{b}^{(l+1)} \right),
+\end{align*}
+where $\mat{W}^{(l)} \in \RR^{D_{l} \times D_{l-1}}, \vec{b}^{(l)} \in \RR^{D_{l}}$ and $\mat{W}^{(l+1)} \in \RR^{D_{l+1} \times D_{l}}, \vec{b}^{(l+1)} \in \RR^{D_{l+1}}$ denote the weight matrices and bias vectors of the two layers, respectively, and $g$ denotes the activation function. To apply Dropout to the $l$-th layer, we switch off each neuron in that layer with a probability $\pi \in (0,1)$. This is implemented by multiplying the output vector of $l$-th layer elementwise with a vector of zeros and ones sampled i.i.d.\@ from the Bernoulli distribution $\operatorname{Ber}(\pi)$. A forward pass with Dropout is as follows:
+\begin{align*}
+  \vec{z}^{(l)} &\defeq g\left( \mat{W}^{(l)} \vec{z}^{(l-1)} + \vec{b}^{(l)}  \right), \\
+  \vec{r}^{(l)} &\defeq \left( r_1^{(l)}, \dots, r_{D_l}^{(l)} \right), \quad r_j^{(l)} \overset{iid}{\sim} \operatorname{Ber}(\pi), \\
+  \tilde{\vec{z}}^{(l)} &\defeq \vec{z}^{(l)} \odot \vec{r}^{(l)}, \\
+  \vec{z}^{(l+1)} &\defeq g\left( \mat{W}^{(l+1)} \tilde{\vec{z}}^{(l)} + \vec{b}^{(l+1)} \right),
+\end{align*}
+where $\odot$ denotes elementwise multiplication. Neurons with output set to zero make no contribution to the following layers, as if they were removed from the network. Therefore, Dropout can be viewed as selecting subnetworks from a full network.
+
+During training, the Dropout vector $\vec{r}^{(l)}$ is re-sampled for each observation \citep{srivastavaDropout2014}. In other words, a random subnetwork is generated and trained on each observation, while the weights are shared between the subnetworks and continuously updated until convergence. We can interpret Dropout as a way of ensembling \citep{hintonDropout2012}, which is almost as efficient as training a single network. If $n$ neurons participate in Dropout, a total of $2^n$ subnetworks can be generated, each of which we can view as an ensemble member. They differ in which neurons from the full network they possess, but the same neuron has the same weights. In practice, not all of the exponentially many ensemble members are actually trained, as the ensemble size is much larger than the typical number of iterations required for SGD to converge.
+
+\subsection{Dropout for Uncertainty Quantification}
+
+
+Interpreting Dropout as an ensemble method, we may approximate the predictive distribution following \eqref{eq:ensemble}. However, averaging over an ensemble of $2^n$ is infeasible, if the number $n$ of neurons participating in Dropout is large. Thus, we resort to sample-based Monte Carlo integration, where we use Dropout to generate a sufficiently large number of subnetworks, evaluate them on the test instance, and aggregate the predictions. This method is called \emph{Monte Carlo Dropout (MC Dropout)}.
+
+Although we motivate MC Dropout as an ensembling method, the MC Dropout method was proposed and justified by \cite{galDropoutBayesianApproximation2016} in a variational inference context. Here we do not present the details of derivation, but only an excerpt of the author's argument which lends some Bayesian flavor to Dropout. The presentation of Dropout in \cref{sec:dropout-mechanism} follows \cite{srivastavaDropout2014}, in which the operation of dropping a neuron is implemented by setting output of the neuron to zero. The same can also be achieved by zeroing out weights.
+
+Using the same notation as in \cref{sec:dropout-mechanism}, if Dropout is applied to the $l$-th layer, then the $(l+1)$-layer computes
+\begin{align*}
+  \vec{z}^{(l+1)} = g\left( \mat{W}^{(l+1)} \left( \vec{z}^{(l)} \odot \vec{r}^{(l)} \right) + \vec{b}^{(l+1)} \right)
+  = g\left( \mat{W}^{(l+1)} \operatorname{diag}\left( \vec{r}^{(l)} \right) \vec{z}^{(l)} + \vec{b}^{(l+1)} \right),
+\end{align*}
+where $\operatorname{diag}(\vec{r}^{(l)})$ is a diagonal matrix with $r_1^{(l)}, \dots, r_{D_l}^{(l)}$ on its diagonal. We define
+\begin{equation*}
+  \tilde{\mat{W}}^{(l+1)} \defeq \mat{W}^{(l+1)} \operatorname{diag}\left( \vec{r}^{(l)} \right).
+\end{equation*}
+If $r_j^{(l)} = 0$, then all entries in the $j$-th column of $\tilde{\mat{W}}^{(l+1)}$ are zero. Therefore, applying Dropout can be seen as sampling weight matrices from the distribution over matrices with one or more columns set to zero. Using this distribution to construct an approximation to the true posterior, \cite{galDropoutBayesianApproximation2016} showed that minimizing the $L_2$-regularized risk w.r.t.\@ the square loss is equivalent to minimizing the KL divergence between the approximation and the true posterior.

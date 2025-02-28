@@ -1,0 +1,23 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
+\contentsline {section}{\numberline {2}Bayesian Deep Learning}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Neural Networks as Probabilistic Models}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Regularization and MAP Estimation}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Predictive Distribution}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Aleatoric and Epistemic Uncertainty}{5}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Laplace Approximation}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Standard Laplace Approximation}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Linearized Laplace Approximation}{8}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Last-layer Laplace Approximation}{9}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Ensembles Methods}{10}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Deep Ensembles}{10}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Symmetry of Modes}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Less Expensive Alternatives}{11}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Monte Carlo Dropout}{12}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Dropout Mechanism}{12}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Dropout for Uncertainty Quantification}{13}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Illustrative Examples}{14}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Binary Classification}{14}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Regression}{16}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Discussion}{19}{section.7}%
+\contentsline {section}{\numberline {8}Conclusion and outlook}{19}{section.8}%
+\contentsline {section}{\numberline {A}Electronic appendix}{V}{appendix.A}%

@@ -1,0 +1,147 @@
+\begin{thebibliography}{xx}
+
+\harvarditem{Daxberger, Kristiadi, Immer, Eschenhagen, Bauer \harvardand\ Hennig}{2021}{daxbergerLaplaceRedux2021}
+Daxberger, E., Kristiadi, A., Immer, A., Eschenhagen, R., Bauer, M. \harvardand\ Hennig, P.  \harvardyearleft 2021\harvardyearright .
+\newblock Laplace {{Redux}} - {{Effortless Bayesian Deep Learning}}, {\em Advances in {{Neural Information Processing Systems}}}, Vol.~34, Curran Associates, Inc., pp.~20089--20103.
+
+\harvarditem{Daxberger, Nalisnick, Allingham, Antoran \harvardand\ {Hernandez-Lobato}}{2021}{daxbergerSubnetLA2021}
+Daxberger, E., Nalisnick, E., Allingham, J.~U., Antoran, J. \harvardand\ {Hernandez-Lobato}, J.~M.  \harvardyearleft 2021\harvardyearright .
+\newblock Bayesian {{Deep Learning}} via {{Subnetwork Inference}}, {\em Proceedings of the 38th {{International Conference}} on {{Machine Learning}}}, PMLR, pp.~2510--2521.
+
+\harvarditem[Eschenhagen et~al.]{Eschenhagen, Daxberger, Hennig \harvardand\ Kristiadi}{2021}{eschenhagenMixturesLaplace2021}
+Eschenhagen, R., Daxberger, E., Hennig, P. \harvardand\ Kristiadi, A.  \harvardyearleft 2021\harvardyearright .
+\newblock Mixtures of {{Laplace Approximations}} for {{Improved Post-Hoc Uncertainty}} in {{Deep Learning}}, {\em Bayesian Deep Learning Workshop, NeurIPS 2021}.
+
+\harvarditem[Fort et~al.]{Fort, Hu \harvardand\ Lakshminarayanan}{2020}{fortDeepEnsemblesLoss2020}
+Fort, S., Hu, H. \harvardand\ Lakshminarayanan, B.  \harvardyearleft 2020\harvardyearright .
+\newblock Deep {{Ensembles}}: {{A Loss Landscape Perspective}}.
+
+\harvarditem{Gal}{2016}{galUncertaintyTypes2016}
+Gal, Y.  \harvardyearleft 2016\harvardyearright .
+\newblock {\em Uncertainty in {{Deep Learning}}}, {{PhD}} Thesis, University of Cambridge.
+
+\harvarditem{Gal \harvardand\ Ghahramani}{2016}{galDropoutBayesianApproximation2016}
+Gal, Y. \harvardand\ Ghahramani, Z.  \harvardyearleft 2016\harvardyearright .
+\newblock Dropout as a {{Bayesian Approximation}}: {{Representing Model Uncertainty}} in {{Deep Learning}}, {\em Proceedings of {{The}} 33rd {{International Conference}} on {{Machine Learning}}}, PMLR, pp.~1050--1059.
+
+\harvarditem[Gawlikowski et~al.]{Gawlikowski, Tassi, Ali, Lee, Humt, Feng, Kruspe, Triebel, Jung, Roscher, Shahzad, Yang, Bamler \harvardand\ Zhu}{2023}{gawlikowskiSurveyUQ2023}
+Gawlikowski, J., Tassi, C. R.~N., Ali, M., Lee, J., Humt, M., Feng, J., Kruspe, A., Triebel, R., Jung, P., Roscher, R., Shahzad, M., Yang, W., Bamler, R. \harvardand\ Zhu, X.~X.  \harvardyearleft 2023\harvardyearright .
+\newblock A survey of uncertainty in deep neural networks, {\em Artificial Intelligence Review} {\bf 56}(1):~1513--1589.
+
+\harvarditem{Gibbs}{1997}{gibbs1997ExtendProbit}
+Gibbs, M.~N.  \harvardyearleft 1997\harvardyearright .
+\newblock {\em Bayesian {{Gaussian Processes}} for {{Regression}} and {{Classi}} Cation}, {{PhD}} thesis, University of Cambridge.
+
+\harvarditem[Grigsby et~al.]{Grigsby, Lindsey \harvardand\ Rolnick}{2023}{grigsbyHiddenSymmetriesReLU2023}
+Grigsby, E., Lindsey, K. \harvardand\ Rolnick, D.  \harvardyearleft 2023\harvardyearright .
+\newblock Hidden {{Symmetries}} of {{ReLU Networks}}, {\em Proceedings of the 40th {{International Conference}} on {{Machine Learning}}}, PMLR, pp.~11734--11760.
+
+\harvarditem[Guo et~al.]{Guo, Pleiss, Sun \harvardand\ Weinberger}{2017}{guoCalibration2017}
+Guo, C., Pleiss, G., Sun, Y. \harvardand\ Weinberger, K.~Q.  \harvardyearleft 2017\harvardyearright .
+\newblock On {{Calibration}} of {{Modern Neural Networks}}, {\em Proceedings of the 34th {{International Conference}} on {{Machine Learning}}}, PMLR, pp.~1321--1330.
+
+\harvarditem[Hinton et~al.]{Hinton, Srivastava, Krizhevsky, Sutskever \harvardand\ Salakhutdinov}{2012}{hintonDropout2012}
+Hinton, G.~E., Srivastava, N., Krizhevsky, A., Sutskever, I. \harvardand\ Salakhutdinov, R.~R.  \harvardyearleft 2012\harvardyearright .
+\newblock Improving neural networks by preventing co-adaptation of feature detectors.
+
+\harvarditem[Hobbhahn et~al.]{Hobbhahn, Kristiadi \harvardand\ Hennig}{2022}{hobbhahnyLapaceBridge2022a}
+Hobbhahn, M., Kristiadi, A. \harvardand\ Hennig, P.  \harvardyearleft 2022\harvardyearright .
+\newblock Fast predictive uncertainty for classification with {{Bayesian}} deep networks, {\em Proceedings of the {{Thirty-Eighth Conference}} on {{Uncertainty}} in {{Artificial Intelligence}}}, PMLR, pp.~822--832.
+
+\harvarditem{H{\"u}llermeier \harvardand\ Waegeman}{2021}{hullermeierAleatoricEpistemicUncertainty2021}
+H{\"u}llermeier, E. \harvardand\ Waegeman, W.  \harvardyearleft 2021\harvardyearright .
+\newblock Aleatoric and epistemic uncertainty in machine learning: An introduction to concepts and methods, {\em Machine Learning} {\bf 110}(3):~457--506.
+
+\harvarditem{Immer, Bauer, Fortuin, R{\"a}tsch \harvardand\ Emtiyaz}{2021}{immerMargLik2021}
+Immer, A., Bauer, M., Fortuin, V., R{\"a}tsch, G. \harvardand\ Emtiyaz, K.~M.  \harvardyearleft 2021\harvardyearright .
+\newblock Scalable {{Marginal Likelihood Estimation}} for {{Model Selection}} in {{Deep Learning}}, {\em Proceedings of the 38th {{International Conference}} on {{Machine Learning}}}, PMLR, pp.~4563--4573.
+
+\harvarditem{Immer, Korzepa \harvardand\ Bauer}{2021}{immerLLA2021a}
+Immer, A., Korzepa, M. \harvardand\ Bauer, M.  \harvardyearleft 2021\harvardyearright .
+\newblock Improving predictions of {{Bayesian}} neural nets via local linearization, {\em Proceedings of {{The}} 24th {{International Conference}} on {{Artificial Intelligence}} and {{Statistics}}}, PMLR, pp.~703--711.
+
+\harvarditem[Kristiadi et~al.]{Kristiadi, Hein \harvardand\ Hennig}{2020}{kristiadiABitBayesian2020}
+Kristiadi, A., Hein, M. \harvardand\ Hennig, P.  \harvardyearleft 2020\harvardyearright .
+\newblock Being {{Bayesian}}, {{Even Just}} a {{Bit}}, {{Fixes Overconfidence}} in {{ReLU Networks}}, {\em Proceedings of the 37th {{International Conference}} on {{Machine Learning}}}, PMLR, pp.~5436--5446.
+
+\harvarditem[Kristiadi et~al.]{Kristiadi, Hein \harvardand\ Hennig}{2021}{kristiadiLearnableUncertaintyLaplace2021}
+Kristiadi, A., Hein, M. \harvardand\ Hennig, P.  \harvardyearleft 2021\harvardyearright .
+\newblock Learnable uncertainty under {{Laplace}} approximations, {\em Proceedings of the {{Thirty-Seventh Conference}} on {{Uncertainty}} in {{Artificial Intelligence}}}, PMLR, pp.~344--353.
+
+\harvarditem[Lakshminarayanan et~al.]{Lakshminarayanan, Pritzel \harvardand\ Blundell}{2017}{lakshminarayananSimpleScalablePredictive2017b}
+Lakshminarayanan, B., Pritzel, A. \harvardand\ Blundell, C.  \harvardyearleft 2017\harvardyearright .
+\newblock Simple and {{Scalable Predictive Uncertainty Estimation}} using {{Deep Ensembles}}, {\em Advances in {{Neural Information Processing Systems}}}, Vol.~30, Curran Associates, Inc.
+
+\harvarditem[Li et~al.]{Li, Xu, Taylor, Studer \harvardand\ Goldstein}{2018}{liVisualizingLossLandscape2018}
+Li, H., Xu, Z., Taylor, G., Studer, C. \harvardand\ Goldstein, T.  \harvardyearleft 2018\harvardyearright .
+\newblock Visualizing the {{Loss Landscape}} of {{Neural Nets}}, {\em Advances in {{Neural Information Processing Systems}}}, Vol.~31, Curran Associates, Inc.
+
+\harvarditem[Livieris et~al.]{Livieris, Iliadis \harvardand\ Pintelas}{2021}{livierisEnsembleTechniquesWeightconstrained2021}
+Livieris, I.~E., Iliadis, L. \harvardand\ Pintelas, P.  \harvardyearleft 2021\harvardyearright .
+\newblock On ensemble techniques of weight-constrained neural networks, {\em Evolving Systems} {\bf 12}(1):~155--167.
+
+\harvarditem[Loquercio et~al.]{Loquercio, Segu \harvardand\ Scaramuzza}{2020}{loquercioAutoDrive2020}
+Loquercio, A., Segu, M. \harvardand\ Scaramuzza, D.  \harvardyearleft 2020\harvardyearright .
+\newblock A general framework for uncertainty estimation in deep learning, {\em IEEE Robotics and Automation Letters} {\bf 5}(2):~3153--3160.
+
+\harvarditem{MacKay}{1992}{mackay1992ProbitApprox2}
+MacKay, D. J.~C.  \harvardyearleft 1992\harvardyearright .
+\newblock The {{Evidence Framework Applied}} to {{Classification Networks}}, {\em Neural Computation} {\bf 4}(5):~720--736.
+
+\harvarditem{Malinin \harvardand\ Gales}{2018}{malininPredictiveUncertaintyEstimation2018}
+Malinin, A. \harvardand\ Gales, M.  \harvardyearleft 2018\harvardyearright .
+\newblock Predictive {{Uncertainty Estimation}} via {{Prior Networks}}, {\em Advances in {{Neural Information Processing Systems}}}, Vol.~31.
+
+\harvarditem[Moosavi-Dezfooli et~al.]{Moosavi-Dezfooli, Fawzi, Fawzi \harvardand\ Frossard}{2017}{moosaviAdversarial2017}
+Moosavi-Dezfooli, S.-M., Fawzi, A., Fawzi, O. \harvardand\ Frossard, P.  \harvardyearleft 2017\harvardyearright .
+\newblock Universal adversarial perturbations, {\em 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, pp.~86--94.
+
+\harvarditem[Mucs{\'a}nyi et~al.]{Mucs{\'a}nyi, Kirchhof \harvardand\ Oh}{2024}{mucsanyiBenchmarkingUncertaintyDisentanglement2024a}
+Mucs{\'a}nyi, B., Kirchhof, M. \harvardand\ Oh, S.~J.  \harvardyearleft 2024\harvardyearright .
+\newblock Benchmarking {{Uncertainty Disentanglement}}: {{Specialized Uncertainties}} for {{Specialized Tasks}}.
+
+\harvarditem[Nguyen et~al.]{Nguyen, Yosinski \harvardand\ Clune}{2015}{nguyenFoolingDNN2015}
+Nguyen, A., Yosinski, J. \harvardand\ Clune, J.  \harvardyearleft 2015\harvardyearright .
+\newblock Deep neural networks are easily fooled: {{High}} confidence predictions for unrecognizable images, {\em 2015 {{IEEE Conference}} on {{Computer Vision}} and {{Pattern Recognition}} ({{CVPR}})}, IEEE, Boston, MA, USA, pp.~427--436.
+
+\harvarditem[Pedregosa et~al.]{Pedregosa, Varoquaux, Gramfort, Michel, Thirion, Grisel, Blondel, Prettenhofer, Weiss, Dubourg, Vanderplas, Passos, Cournapeau, Brucher, Perrot \harvardand\ Duchesnay}{2011}{scikit-learn}
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M. \harvardand\ Duchesnay, E.  \harvardyearleft 2011\harvardyearright .
+\newblock Scikit-learn: Machine learning in {P}ython, {\em Journal of Machine Learning Research} {\bf 12}:~2825--2830.
+
+\harvarditem[Ritter et~al.]{Ritter, Botev \harvardand\ Barber}{2018}{ritterScalableLA2018}
+Ritter, H., Botev, A. \harvardand\ Barber, D.  \harvardyearleft 2018\harvardyearright .
+\newblock A {{Scalable Laplace Approximation}} for {{Neural Networks}}, {\em International {{Conference}} on {{Learning Representations}}}.
+
+\harvarditem[Roy et~al.]{Roy, Conjeti, Navab \harvardand\ Wachinger}{2019}{royBrainSegment2019}
+Roy, A.~G., Conjeti, S., Navab, N. \harvardand\ Wachinger, C.  \harvardyearleft 2019\harvardyearright .
+\newblock Bayesian {{QuickNAT}}: {{Model}} uncertainty in deep whole-brain segmentation for structure-wise quality control, {\em NeuroImage} {\bf 195}:~11--22.
+
+\harvarditem[Sommer et~al.]{Sommer, Wimmer, Papamarkou, Bothmann, Bischl \harvardand\ R{\"u}gamer}{2024}{sommerConnectingDotsModeConnectedness2024b}
+Sommer, E., Wimmer, L., Papamarkou, T., Bothmann, L., Bischl, B. \harvardand\ R{\"u}gamer, D.  \harvardyearleft 2024\harvardyearright .
+\newblock Connecting the {{Dots}}: {{Is Mode-Connectedness}} the {{Key}} to {{Feasible Sample-Based Inference}} in {{Bayesian Neural Networks}}?, {\em Proceedings of the 41st {{International Conference}} on {{Machine Learning}}}, PMLR, pp.~45988--46018.
+
+\harvarditem{Spiegelhalter \harvardand\ Lauritzen}{1990}{spiegelhalter1990ProbitApprox1}
+Spiegelhalter, D.~J. \harvardand\ Lauritzen, S.~L.  \harvardyearleft 1990\harvardyearright .
+\newblock Sequential updating of conditional probabilities on directed graphical structures, {\em Networks} {\bf 20}(5):~579--605.
+
+\harvarditem[Srivastava et~al.]{Srivastava, Hinton, Krizhevsky, Sutskever \harvardand\ Salakhutdinov}{2014}{srivastavaDropout2014}
+Srivastava, N., Hinton, G., Krizhevsky, A., Sutskever, I. \harvardand\ Salakhutdinov, R.  \harvardyearleft 2014\harvardyearright .
+\newblock Dropout: {{A Simple Way}} to {{Prevent Neural Networks}} from {{Overfitting}}, {\em Journal of Machine Learning Research} {\bf 15}(56):~1929--1958.
+
+\harvarditem{{Valdenegro-Toro}}{2019}{valdenegro-toroDeepSubEnsemblesFast2019}
+{Valdenegro-Toro}, M.  \harvardyearleft 2019\harvardyearright .
+\newblock Deep {{Sub-Ensembles}} for {{Fast Uncertainty Estimation}} in {{Image Classification}}.
+
+\harvarditem[Wen et~al.]{Wen, Tran \harvardand\ Ba}{2019}{wenBatchEnsembleAlternativeApproach2019}
+Wen, Y., Tran, D. \harvardand\ Ba, J.  \harvardyearleft 2019\harvardyearright .
+\newblock {{BatchEnsemble}}: An {{Alternative Approach}} to {{Efficient Ensemble}} and {{Lifelong Learning}}, {\em International {{Conference}} on {{Learning Representations}}}.
+
+\harvarditem{Wilson \harvardand\ Izmailov}{2020}{wilsonBayesianDeepLearning2020}
+Wilson, A.~G. \harvardand\ Izmailov, P.  \harvardyearleft 2020\harvardyearright .
+\newblock Bayesian {{Deep Learning}} and a {{Probabilistic Perspective}} of {{Generalization}}, {\em Advances in {{Neural Information Processing Systems}}}, Vol.~33, Curran Associates, Inc., pp.~4697--4708.
+
+\harvarditem[Wimmer et~al.]{Wimmer, Sale, Hofman, Bischl \harvardand\ H{\"u}llermeier}{2023}{wimmerQuantifyingAleatoricEpistemic2023}
+Wimmer, L., Sale, Y., Hofman, P., Bischl, B. \harvardand\ H{\"u}llermeier, E.  \harvardyearleft 2023\harvardyearright .
+\newblock Quantifying aleatoric and epistemic uncertainty in machine learning: {{Are}} conditional entropy and mutual information appropriate measures?, {\em Proceedings of the {{Thirty-Ninth Conference}} on {{Uncertainty}} in {{Artificial Intelligence}}}, PMLR, pp.~2282--2292.
+
+\end{thebibliography}

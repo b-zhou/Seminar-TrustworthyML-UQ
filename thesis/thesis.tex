@@ -1,0 +1,206 @@
+\documentclass[12pt]{article}
+
+\usepackage[]{graphicx}
+\usepackage[]{color}
+\usepackage{alltt}
+
+\newcommand{\mytitle}{Uncertainty Quantification in Neural Networks}
+\newcommand{\myname}{Baisu Zhou}
+\newcommand{\mysupervisor}{Dr.\@ Ludwig Bothmann}
+
+\usepackage[a4paper, width = 160mm, top = 35mm, bottom = 30mm, 
+bindingoffset = 0mm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{ragged2e}
+\usepackage{xcolor}
+\usepackage[round, comma]{natbib}
+\usepackage{fancyhdr}
+\newcommand{\changefont}{%
+    \fontsize{8}{11}\selectfont
+}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true,
+  linkcolor = black,
+  urlcolor = black,
+  citecolor = black}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[R]{\changefont{\mytitle}}
+\fancyfoot{}
+\fancyfoot[R]{\thepage}
+\setlength{\headheight}{14.5pt}
+\setlength{\parindent}{1em}
+\interfootnotelinepenalty = 10000
+
+\input{macros.tex}
+\usepackage[capitalise]{cleveref}
+% ------------------------------------------------------------------------------
+% MAIN -------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+% FRONT PAGE -------------------------------------------------------------------
+ 
+\begin{titlepage}
+\begin{center}
+    
+\LARGE
+Seminar Paper
+    
+\vspace{0.5cm}
+      
+\rule{\textwidth}{1.5pt}
+\LARGE
+\textbf{\mytitle}
+\rule{\textwidth}{1.5pt}
+   
+\vspace{0.5cm}
+      
+\large
+Department of Statistics \\
+Ludwig-Maximilians-Universität München 
+
+\vfill
+
+\Large
+\textbf{\myname}
+
+\vfill
+
+\large
+Munich, Feburary 28\textsuperscript{th}, 2025
+      
+\vfill
+
+\includegraphics[width = 0.4\textwidth]{sigillum.png}
+
+\vfill
+
+\normalsize
+Submitted in partial fulfillment of the requirements for the degree of B. Sc.
+\\
+
+Supervised by \mysupervisor
+
+\end{center}
+\end{titlepage}
+
+% CONTENTS ---------------------------------------------------------------------
+
+\pagenumbering{Roman}
+\newpage
+
+\begin{abstract}
+
+Quantifying uncertainty in predictions is a way to make neural networks as highly complex black-box models more trustworthy. Following a Bayesian approach, one can turn neural networks into probabilistic models capable of estimating uncertainty along with making predictions. However, tracking uncertainty in neural networks imposes great computational challenges. In this paper, we present the theoretical framework and discuss approaches that make uncertainty-aware deep learning feasible.
+
+\end{abstract}
+
+\newpage
+\tableofcontents
+
+%%%% if you would want to include material overview
+%%%% use one of the following in addition
+% \newpage
+% \listoffigures
+% \newpage
+% \listoftables
+\newpage
+
+% CHAPTERS ---------------------------------------------------------------------
+
+\pagenumbering{arabic}
+
+\input{chapters/intro.tex}
+\newpage
+\input{chapters/bayes.tex}
+\newpage
+\input{chapters/la.tex}
+\newpage
+\input{chapters/de.tex}
+\newpage
+\input{chapters/dropout.tex}
+\newpage
+\input{chapters/experiments.tex}
+\newpage
+\input{chapters/conclusion.tex}
+
+% \section{Introduction}
+% \label{sec:intro}
+% \input{chapters/introduction}
+% \newpage
+
+% \section{Conclusion}
+% \label{conclusion}
+% \input{chapters/conclusion}
+
+\newpage
+
+% ------------------------------------------------------------------------------
+% APPENDIX ---------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+    
+\pagenumbering{Roman}
+
+\setcounter{page}{5} % CHANGE
+
+\appendix
+
+% \section{Appendix}
+% \label{app}
+% \input{chapters/appendix}
+% \newpage
+
+\section{Electronic appendix}
+\label{el_app}
+
+Data, code and figures are provided in electronic form.
+
+\newpage
+    
+% ------------------------------------------------------------------------------
+% BIBLIOGRAPHY -----------------------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\RaggedRight
+\bibliography{bibliography}
+\bibliographystyle{dcu}
+\newpage
+
+% ------------------------------------------------------------------------------
+% DECLARATION OF AUTHORSHIP-----------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\Large
+\noindent
+\textbf{Declaration of authorship} 
+\vspace{0.5cm}
+\noindent
+\normalsize
+
+I hereby declare that the report submitted is my own unaided work. All direct 
+or indirect sources used are acknowledged as references. I am aware that the 
+Thesis in digital form can be examined for the use of unauthorized aid and in 
+order to determine whether the report as a whole or parts incorporated in it may 
+be deemed as plagiarism. For the comparison of my work with existing sources I 
+agree that it shall be entered in a database where it shall also remain after 
+examination, to enable comparison with future Theses submitted. Further rights 
+of reproduction and usage, however, are not granted here. This paper was not 
+previously presented to another examination board and has not been published.
+\\
+
+\vspace{1cm}
+\textcolor{orange}{Location, date} \\
+
+\vspace{3cm}
+
+\noindent\rule{0.5\textwidth}{0.4pt} \\
+
+\textcolor{orange}{Name}
+
+% ------------------------------------------------------------------------------
+
+\end{document}

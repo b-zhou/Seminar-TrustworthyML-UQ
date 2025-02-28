@@ -1,0 +1,87 @@
+\section{Laplace Approximation}
+\label{sec:la}
+
+\emph{Laplace approximation} (LA) is a post-hoc method for analytically approximating the posterior of parameters \citep{daxbergerLaplaceRedux2021}. Interpreting learned parameters as MAP estimates, we can apply Laplace approximation to neural networks of arbitrary architectures.
+
+\subsection{Standard Laplace Approximation}
+
+Let $\hat{\vec{\theta}}_\text{MAP}$ be the MAP estimate of the network parameters $\vec{\theta}$. Suppose that $\vec{\theta} \in \RR^d$. A second-order Taylor approximation of the log-posterior about $\hat{\vec{\theta}}_\text{MAP}$ yields
+\begin{align*}
+  \log p(\vec{\theta} \given \mathcal{D}) \approx& \log p(\hat{\vec{\theta}}_\text{MAP} \given \mathcal{D}) \\
+  &+ (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP})^\T \grad_{\vec{\theta}} \log p(\hat{\vec{\theta}}_\text{MAP} \given \mathcal{D}) \\
+  &+ \frac{1}{2} (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP})^\T \mat{H} (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP}),
+\end{align*}
+where
+\begin{equation} \label{eq:hessian}
+  \mat{H} = \left( \pdv{\log p(\hat{\vec{\theta}}_\text{MAP} \given \mathcal{D})}{\vec{\theta}_i, \vec{\theta}_j} \right)_{i,j=1}^{d}
+\end{equation}
+denotes the Hessian matrix of the log-posterior evaluated at the MAP estimate. Since the gradient at the maximum is zero, the first-order term vanishes and we obtain
+\begin{equation*}
+  \log p(\vec{\theta} \given \mathcal{D}) \approx  \log p(\hat{\vec{\theta}}_\text{MAP} \given \mathcal{D}) + \frac{1}{2} (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP})^\T \mat{H} (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP}).
+\end{equation*}
+Exponentiating both sides yields
+\begin{align*}
+  p(\vec{\theta} \given \mathcal{D}) &\approx p(\hat{\vec{\theta}}_\text{MAP} \given \mathcal{D}) \exp\mleft( \frac{1}{2} (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP})^\T H (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP}) \mright) \\
+  &\propto \exp\mleft( - \frac{1}{2} (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP})^\T (-\mat{H}) (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP}) \mright).
+\end{align*}
+The posterior density as a function of $\vec{\theta}$ is approximately proportional to an exponential of a quadratic form in $\vec{\theta}$. Thus,
+\begin{equation} \label{eq:la}
+  p(\vec{\theta} \given \mathcal{D}) \approx \mathcal{N}\mleft( \vec{\theta}; \hat{\vec{\theta}}_\text{MAP}, (- \mat{H})^{-1} \mright).
+\end{equation}
+Using this posterior approximation, we can approximate the predictive distribution via Monte Carlo integration. The idea to approximate an expectation by a sample mean:
+\begin{equation*}
+  p(y_* \given \vec{x}_*, \mathcal{D}) = \mathbb{E}_{\vec{\theta} \sim p(\vec{\theta} \given \mathcal{D})}[p(y_* \given \vec{x}_*, \vec{\theta})]
+  \approx \frac{1}{m} \sum_{k=1}^{m} p(y_* \given \vec{x}_*, \vec{\theta}_k), \quad
+  \vec{\theta}_i \overset{iid}{\sim} \mathcal{N}(\hat{\vec{\theta}}_\text{MAP}, (- \mat{H})^{-1}).
+\end{equation*}
+
+Note that LA depends on the prior distribution, but only through the Hessian matrix. Assuming the network is trained via standard SGD with weight decay, we obtain the log-posterior
+\begin{align*}
+  \log p(\vec{\theta} \given \mathcal{D}) = \log p(\mathcal{D} \given \vec{\theta}) + \log p(\vec{\theta}) + \text{const.}
+  = \log p(\mathcal{D} \given \vec{\theta}) - \frac{1}{2 \tau^2} \norm{\vec{\theta}}^2 + \text{const.}
+\end{align*}
+Then the Hessian at the MAP estimate is given by
+\begin{equation} \label{eq:hessian-gaussian-prior}
+  \mat{H} = \pdv{\log p(\mathcal{D} \given \hat{\vec{\theta}}_\text{MAP})}{\vec{\theta}, \vec{\theta}^\T} - \tau^{-2} \mat{I},
+\end{equation}
+where $\mat{I}$ denotes the identity matrix. In theory, the prior precision $\tau^{-2}$ should be chosen according to the weight decay constant. In practice, however, $\tau^{-2}$ is considered a separate hyperparameter \citep{ritterScalableLA2018,kristiadiABitBayesian2020,immerLLA2021a} and tuned on observed data, e.g., by maximizing the predictive log-likelihood on a validation set \citep{ritterScalableLA2018} or applying the empirical Bayes method \citep{immerMargLik2021}.
+
+Note that the Hessian matrix contains $d \times d$ entries, where $d$ is the number of parameters. For a large neural network, Hessian computation is very expensive. We must resort to approximation methods \citep{daxbergerLaplaceRedux2021}, and we emphasize that such approximation methods are not trivial to implement. The datails are beyond the scope of this paper.
+
+\subsection{Linearized Laplace Approximation}
+
+Since the approximate posterior is Gaussian, we can exploit properties of Gaussian random variables to develop approximation methods for the predictive distribution other than Monte Carlo integration.
+
+Consider the neural network as a composition $f(x; \vec{\theta}) = g(h(x; \vec{\theta}))$ of two functions $h$ and $g$, where $h(\wc; \vec{\theta}): \mathcal{X} \longrightarrow \RR^K$ maps the input space to the last-layer output space $\RR^K$ and $g$ transforms the last-layer output into predicted labels or probabilities. For example, for multiclass classification $g$ is the softmax function. Given a fixed input object $\vec{x}_*$, the last-layer output $\vec{h}_* \defeq h(\vec{x}_*; \vec{\theta})$ can be seen as a function of the parameters $\vec{\theta}$. We linearize this function about $\hat{\vec{\theta}}_\text{MAP}$ as
+\begin{equation} \label{eq:linearize}
+  \vec{h}_* = h(\vec{x}_*; \vec{\theta}) \approx h(\vec{x}_*; \hat{\vec{\theta}}_\text{MAP}) + J(\hat{\vec{\theta}}_\text{MAP}; \vec{x}_*) (\vec{\theta} - \hat{\vec{\theta}}_\text{MAP}),
+\end{equation}
+where $J(\hat{\vec{\theta}}_\text{MAP}; \vec{x}_*)$ denotes the Jacobian matrix of the function $\vec{\theta} \mapsto h(\vec{x}_*; \vec{\theta})$ evaluated at the MAP estimate. Since $p(\vec{\theta} \given \mathcal{D}) \approx \mathcal{N}( \vec{\theta}; \hat{\vec{\theta}}_\text{MAP}, (- \mat{H})^{-1} )$,
+\begin{equation} \label{eq:lla}
+  p(\vec{h}_* \given \vec{x}_*, \mathcal{D}) \approx \mathcal{N}\mleft( \vec{h}_*;  h(\vec{x}_*; \hat{\vec{\theta}}_\text{MAP}), \mat{J}(\hat{\vec{\theta}}_\text{MAP}; \vec{x}_*) (-\mat{H})^{-1} \mat{J}(\hat{\vec{\theta}}_\text{MAP}; \vec{x}_*)^\T  \mright).
+\end{equation}
+This is the \emph{linearized Laplace approximation} (LLA) \citep{immerLLA2021a}. In a regression setting where the network outputs a single scalar, the last-layer output $\vec{h}_*$ directly is the predicted label, i.e., $g = \operatorname{id}$ and $f(\vec{x}_*; \vec{\theta}) = h(\vec{x}_*; \vec{\theta}) = \vec{h}_*$. That means the predictive distribution can be approximated by
+\begin{equation*}
+  p(y_* \given \vec{x}_*, \mathcal{D}) \approx \mathcal{N}\mleft( y_*;  f(\vec{x}_*; \hat{\vec{\theta}}_\text{MAP}), \mat{J}(\hat{\vec{\theta}}_\text{MAP}; \vec{x}_*) (-\mat{H})^{-1} \mat{J}(\hat{\vec{\theta}}_\text{MAP}; \vec{x}_*)^\T  \mright).
+\end{equation*}
+For classification, $\vec{h}_*$ is transformed by a sigmoid or softmax function $g$ into class probabilities. To obtain the predictive distribution, we need to solve the integral
+\begin{equation} \label{eq:predictive-lla-classif}
+\begin{split}
+  p(y_* \given \vec{x}_*, \mathcal{D}) &= \int p(y_* \given \vec{h}_*) p(\vec{h}_* \given \vec{x}_*, \mathcal{D}) \d \vec{h}_* \\
+  &\approx \int p(y_* \given \vec{h}_*) \mathcal{N}\mleft( \vec{h}_*;  h(\vec{x}_*; \hat{\vec{\theta}}_\text{MAP}), \mat{J}(\hat{\vec{\theta}}_\text{MAP}; \vec{x}_*) (-\mat{H})^{-1} \mat{J}(\hat{\vec{\theta}}_\text{MAP}; \vec{x}_*)^\T  \mright) \d \vec{h}_*.\;\;\;
+  % = \mathbb{E}_{\vec{h}_* \sim p(\vec{h}_* \given \vec{x}_*, \mathcal{D})}[p(y_* \given \vec{h}_*)].
+\end{split}
+\end{equation}
+For binary classification with $y_* \in \{0,1\}$, $p(y_* \given \vec{h}_*) = \operatorname{Ber}(y_*; \operatorname{sigmoid}(\vec{h}_*))$. For multiclass classification with $y_* \in \{1, \dots, K\}$, $p(y_* \given \vec{h}_*) = \operatorname{Cat}(y_*; \operatorname{softmax}(\vec{h}_*))$. In these two cases, the integral \eqref{eq:predictive-lla-classif} is intractable. One approximation method is again Monte Carlo integration. For the Bernoulli likelihood, probit approximation \citep{spiegelhalter1990ProbitApprox1,mackay1992ProbitApprox2} is an alternative. For the categorical likelihood, extended probit approximation \citep{gibbs1997ExtendProbit} or Laplace bridge \citep{hobbhahnyLapaceBridge2022a} can be used.
+
+In comparison to standard LA with Monte Carlo integration, LLA with the aforementioned approximation methods is free of sampling, but requires evaluating the Jacobian matrix once for each prediction. Although linearization seems to incur additional error, LLA is often preferrable to standard LA with Monte Carlo integration. The latter approach tends to overestimate predictive uncertainty, while the former yields better uncertainty estimates \cite{immerLLA2021a}. Moreover, \cite{kristiadiABitBayesian2020} justifies LLA theoretically by showing its capability of mitigating the overconfidence problem in ReLU classification networks.
+
+\subsection{Last-layer Laplace Approximation}
+
+LLA faces the same challenge of Hessian computation as standard Laplace approximation. \cite{daxbergerSubnetLA2021} propose performing Laplace approximation on a sub-network and show that more refined Hessian approximation on a small sub-network outperforms oversimplified Hessian approximation on the whole network. As a special case of sub-network Laplace approximation, applying Laplace approximation only to the last-layer weights and biases not only shows competitive performance to all-layer Laplace approximation \citep{daxbergerLaplaceRedux2021}, but also shares LLA's nice theoretical properties \citep{kristiadiABitBayesian2020}.
+
+Last-layer Laplace approximation is particularly efficient. Let $\mat{W}$ and $\vec{b}$ be the weight matrix and bias vector of the last layer, and $\phi$ be the network up to the second-last layer. Then the last-layer output can be written as
+\begin{equation*}
+  \vec{h}_* = \mat{W} \phi(\vec{x}_*) + \vec{b}.
+\end{equation*}
+Using Laplace approximation, the posterior of $\mat{W}$ and $\vec{b}$ are approximated by Gaussians. Since $\vec{h}_*$ is linear in $\mat{W}$ and $\vec{b}$, it also approximately follows a Gaussian distribution \citep{eschenhagenMixturesLaplace2021}. To approximate the predictive distribution, we can therefore employ the same direct approximation methods as for LLA instead of sampling-based Monte Carlo integration. Furthermore, Hessian computation is drastically simplified due to the much smaller number of parameters involved.

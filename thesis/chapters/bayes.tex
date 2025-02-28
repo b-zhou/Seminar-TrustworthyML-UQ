@@ -1,0 +1,132 @@
+\section{Bayesian Deep Learning}
+\label{sec:bayesian-dl}
+
+Adopting a Bayesian view, we use probability distributions to capture uncertainty. This section delves into setting up the framework of Bayesian inference in the context of deep learning.  
+
+\subsection{Neural Networks as Probabilistic Models}
+\label{sec:nn}
+
+A neural network is a parametric function $f(\wc; \vec{\theta})$ mapping feature objects $x \in \mathcal{X}$ to target values or labels $f(x; \vec{\theta}) \in \mathcal{Y}$, where $\vec{\theta}$ is a typically high-dimensional parameter vector. In preparation for a Bayesian interpretation, we view neural network from a probabilistic modeling perspective and establish the equivalence between empirical risk minimization and maximum likelihood estimation.
+
+Let $\mathcal{D} = \{(\vec{x}_i, y_i)\}_{i=1}^{n}$ be a training set. We assume the training observations to be i.i.d. For a regression task, in which the network is intended to predict scalar labels, we make the distributional assumption
+\begin{equation*}
+  y_i \given \vec{x}_i \overset{iid}{\sim} \mathcal{N}(f(\vec{x}_i; \vec{\theta}); \sigma^2).
+\end{equation*}
+The negative log-likelihood on $\mathcal{D}$ is given by
+\begin{equation*}
+  - \log p(\mathcal{D} \given \vec{\theta}) = \sum_{i=1}^{n} - \log p(y_i \given \vec{x}_i, \vec{\theta})
+  \propto \sum_{i=1}^{n} (y_i - f(\vec{x}_i; \vec{\theta}))^2,
+\end{equation*}
+which can be interpreted an empirical risk w.r.t.\@ the square loss. In this approach, the variance parameter $\sigma^2$ is assumed to be a constant and ignored in the optimization procedure, although the conditional variance can be seen as a natural measure of uncertainty for the target variable. To use this measure, we can predict $\sigma^2$ from training data. Accounting for potential heteroskedasticity, we use a network with two outputs: one for the predicted mean $\mu_i \defeq \mu(\vec{x}_i; \vec{\theta})$, the other for the predicted variance $\sigma^2_i \defeq \sigma^2(\vec{x}_i; \vec{\theta})$. The distributional assumption becomes
+\begin{equation*}
+  y_i \given \vec{x}_i \overset{iid}{\sim} \mathcal{N}(\mu(\vec{x}_i; \vec{\theta}); \sigma^2(\vec{x}_i; \vec{\theta})).
+\end{equation*}
+The corresponding negative log-likelihood is a sum of logarithms of Gaussian densities.
+
+For a binary classification task, the network outputs a predictive probability for the positive class. The only appropriate distributional assumption is a Bernoulli distribution
+\begin{equation*}
+  y_i \given \vec{x}_i \overset{iid}{\sim} \operatorname{Ber}(f(\vec{x}_i; \vec{\theta})).
+\end{equation*}
+Then the negative log-likelihood on $\mathcal{D}$ amounts to an empirical risk w.r.t.\@ the Bernoulli loss
+\begin{equation*}
+  - \log p(\mathcal{D} \given \vec{\theta})
+  = \sum_{i=1}^{n} - y_i \log f(\vec{x}_i; \vec{\theta}) - (1 - y_i) \log (1 - f(\vec{x}_i; \vec{\theta})).
+\end{equation*}
+For a multiclass classification task, the network outputs a probability vector of $K$ entries. Each entry represents the predictive probability for one of the $K$ classes. We consider each label $y_i$ to be a class index, i.e., $y_i \in \{1, \dots, K\}$, and assume the conditional distribution of $y_i$ given $\vec{x}_i$ to be a categorical distribution
+\begin{equation*}
+  y_i \given \vec{x}_i \overset{iid}{\sim} \operatorname{Cat}(f(\vec{x}_i; \vec{\theta})),
+\end{equation*}
+which yields
+\begin{equation*}
+  - \log p(\mathcal{D} \given \vec{\theta})
+  = \sum_{i=1}^{n} \sum_{k=1}^{K} - \Ind(y_i = k) \log f(\vec{x}_i; \vec{\theta}),
+\end{equation*}
+where $\Ind(\wc)$ denotes the indicator function. This negative log-likelihood corresponds to an empirical risk w.r.t.\@ the cross entropy loss.
+
+Defining the empirical risk as
+\begin{equation*}
+  \emprisk(\vec{\theta}) \coloneqq - \log p(\mathcal{D} \given \vec{\theta}) = \sum_{i=1}^{n} \loss(y_i, f(\vec{x}_i; \vec{\theta})),
+\end{equation*}
+where $\loss$ is a loss function derived from the negative log-likelihood, we see that the empirical risk minimizer
+\begin{equation*}
+  \hat{\vec{\theta}} \coloneqq \argmin_{\vec{\theta}} \emprisk(\vec{\theta}) = \argmax_{\vec{\theta}} \log p(\mathcal{D} \given \vec{\theta})
+\end{equation*}
+is identical to the maximum likelihood estimator of $\vec{\theta}$. In practice, \emph{gradient descent} is used to solve the minimization problem. The algorithm starts at a random initial point $\vec{\theta}^{(0)}$ in the parameter space and iteratively computes
+\begin{equation*}
+  \vec{\theta}^{(t+1)} \coloneqq \vec{\theta}^{(t)} - \eta \grad \emprisk\left( \vec{\theta}^{(t)} \right) = \vec{\theta}^{(t)} - \eta \grad \sum_{i=1}^{n} \loss(y_i, f(\vec{x}_i; \vec{\theta}))
+\end{equation*}
+for $t = 1,2,\dots$ until convergence. The hyperparameter $\eta > 0$ is called the learning rate, which may also depend on $t$. If the training set is large, it is too expensive to re-evaluate the gradient $\grad \emprisk(\vec{\theta}^{(t)})$ in every iteration $t$. For computational efficiency, we randomly sample a \emph{mini-batch} $\mathcal{B} \subseteq \mathcal{D}$ of training data and estimate the gradient by
+\begin{equation*}
+  \frac{n}{\abs{\mathcal{B}}} \sum_{(\vec{x}, y) \in \mathcal{B}} \ell(\vec{x}, y).
+\end{equation*}
+In every iteration, we generate a new random mini-batch, estimate the loss gradient, and use this estimate to perform gradient descent. This training procedure is called \emph{stochastic gradient descent (SGD)}.
+
+\subsection{Regularization and MAP Estimation}
+\label{sec:regularization}
+
+As highly complex functions, neural networks are prone to overfitting. For higher generalizability, regularization is necessary. L2 regularization is commonly used in deep learning. Instead of the empirical risk, we now minimize the \emph{regularized risk}
+\begin{equation*}
+  \regrisk(\vec{\theta}) \coloneqq \emprisk(\vec{\theta}) + \frac{\lambda}{2} \norm{\vec{\theta}}^2,
+\end{equation*}
+where $\norm{\wc}$ denotes the Euclidean norm and $\lambda > 0$ is a hyperparameter parameter controling the strength of regularization\footnote{Scaling $\lambda$ by $1/2$ simplifies the gradient.}. In practice, L2 regularization is implemented efficiently as \emph{weight decay}. Note that
+\begin{align*}
+  \grad \regrisk(\vec{\theta}) = \grad \emprisk(\vec{\theta}) + \lambda \vec{\theta}.
+\end{align*}
+When performing gradient descent under L2 regularization, the update rule becomes
+\begin{align*}
+  \vec{\theta}^{(t+1)} &= \vec{\theta}^{(t)} - \eta \grad \regrisk\left( \vec{\theta}^{(t)} \right) \\
+  &= \vec{\theta}^{(t)} - \eta \left( \grad \emprisk\left( \vec{\theta}^{(t)} \right) + \lambda \vec{\theta}^{(t)} \right) \\
+  &= \vec{\theta}^{(t)} - \eta \grad \emprisk(\vec{\theta}) - \eta \lambda \vec{\theta}^{(t)} \\
+  &= (1 - \eta \lambda) \vec{\theta}^{(t)} - \eta \grad \emprisk\left( \vec{\theta}^{(t)} \right).
+\end{align*}
+Given that $\eta \lambda < 1$, the parameters first decay by a factor $(1 - \eta \lambda)$ before the usual gradient step, hence the name ``weight decay.''
+
+Now we show the equivalence between L2 regularization or weight decay and Bayesian \emph{maximum a posteriori (MAP)} estimation with a Gaussian prior $\vec{\theta} \sim \mathcal{N}(0, \tau^2 I)$. Suppose $\emprisk(\vec{\theta}) = - \log p(\mathcal{D} \given \vec{\theta})$. The parameter estimate under L2 regularization is given by
+\begin{equation} \label{eq:l2-reg}
+  \hat{\vec{\theta}}_\text{L2} \coloneqq \argmin_{\vec{\theta}} \left( \emprisk(\vec{\theta}) + \frac{\lambda}{2} \norm{\vec{\theta}}^2 \right)
+  = \argmin_{\vec{\theta}} \left( - \log p(\mathcal{D} \given 
+  \vec{\theta}) + \frac{\lambda}{2} \norm{\vec{\theta}}^2 \right).
+\end{equation}
+Under the prior assumption $\vec{\theta} \sim \mathcal{N}(0, \tau^2 I)$, the MAP estimate or \emph{posterior mode} is given by
+\begin{align*}
+  \hat{\vec{\theta}}_\text{MAP} &\coloneqq \argmax_{\vec{\theta}} \log p(\vec{\theta} \given \mathcal{D}) \\
+  &= \argmax_{\vec{\theta}} \left( \log p(\mathcal{D} \given \vec{\theta}) + \log p(\vec{\theta}) \right) \\
+  &= \argmax_{\vec{\theta}} \left( \log p(\mathcal{D} \given \vec{\theta}) - \frac{1}{2 \tau^2} \norm{\vec{\theta}}^2 \right) \\
+  &= \argmin_{\vec{\theta}} \left( - \log p(\mathcal{D} \given \vec{\theta}) + \frac{1}{2 \tau^2} \norm{\vec{\theta}}^2 \right).
+\end{align*}
+Setting $\tau^2 = \lambda^{-1}$ gives exactly \eqref{eq:l2-reg}. Therefore, if a network is trained using weight decay, we can interpret the parameter estimate as an MAP estimate.
+
+\subsection{Predictive Distribution}
+\label{sec:bma}
+
+Given a single MAP estimate $\hat{\vec{\vec{\theta}}}$ and a new feature vector $\vec{x}_*$, one could directly use the likelihood $p(y_* \given \vec{x}_*, \hat{\vec{\vec{\theta}}})$ to express uncertainty about the predicted target $y_*$. From a Bayesian perspective, however, we know that the MAP estimate is merely a single point from the posterior. A more reliable representation of the predictive uncertainty should take all information from the posterior into account. This motivates the \emph{predictive distribution}
+\begin{equation} \label{eq:predictive}
+  p(y_* \given \vec{x}_*, \mathcal{D}) \defeq \int p(y_* \given \vec{x}_*, \vec{\vec{\theta}}) p(\vec{\vec{\theta}} \given \mathcal{D}) \d\vec{\vec{\theta}}
+  = \mathbb{E}_{\vec{\vec{\theta}} \sim p(\vec{\vec{\theta}} \given \mathcal{D})}[p(y_* \given \vec{x}_*, \vec{\vec{\theta}})].
+\end{equation}
+The integral is also called \emph{Bayesian model averaging} \citep{wilsonBayesianDeepLearning2020}. Instead of focusing on a single point estimate, the predictive distribution averages over the entire posterior. Since the posterior distribution is tractable, the true predictive distribution is generally unknown. Even if an approximation of the posterior exists, the integral in \eqref{eq:predictive} is typically intractable \citep{wilsonBayesianDeepLearning2020,gawlikowskiSurveyUQ2023}. A generic approach to approximating this integral is \emph{Monte Carlo integration}. The idea is to approximate the expectation by a sample mean
+\begin{equation*}
+  p(y_* \given \vec{x}_*, \mathcal{D})
+  = \mathbb{E}_{\vec{\vec{\theta}} \sim p(\vec{\vec{\theta}} \given \mathcal{D})}[p(y_* \given \vec{x}_*, \vec{\vec{\theta}})]
+  \approx \frac{1}{m} \sum_{i=1}^{m} p(y_* \given \vec{x}_*, \hat{\vec{\vec{\theta}}}_i),
+\end{equation*}
+where $\hat{\vec{\vec{\theta}}}_1, \dots, \hat{\vec{\vec{\theta}}}_m$ are an i.i.d.\@ sample drawn from the posterior or, in practice, an approximation thereof.
+
+In classification, Monte Carlo integration amounts to averaging the predicted probabilities over a sample of parameters. In regression, if the quadratic loss is used and error variance is ignored in training, we do not have the likelihood $p(y_* \given \vec{x}_*, \hat{\vec{\vec{\theta}}})$ fully specified but only know the mean. Then we can estimate the expectation and variance of the predictive distribution using sample mean and sample variance of predicted labels over the Monte Carlo sample of parameters. If error variance is included as a second output of the network, the Monte Carlo sum yields a mixture of Gaussian distributions with mean and variance given by
+\begin{align*}
+  \hat{\Exp}[y_* \given \vec{x}_*, \mathcal{D}] &\defeq \frac{1}{m} \sum_{i=1}^{m} \mu(\vec{x}_*; \hat{\vec{\vec{\theta}}}_i), \\
+  \hat{\Var}[y_* \given \vec{x}_*, \mathcal{D}] &\defeq \frac{1}{m} \sum_{i=1}^{m} \left( \sigma^2(\vec{x}_*; \hat{\vec{\vec{\theta}}}_i) + \mu(\vec{x}; \hat{\vec{\vec{\theta}}}_i)^2  \right) - \hat{\Exp}[y_* \given \vec{x}_*, \mathcal{D}]^2,
+\end{align*}
+where $\mu(\vec{x}; \vec{\vec{\theta}})$ and $\sigma^2(\vec{x}; \vec{\vec{\theta}})$ denote the predicted mean and variance, respectively \citep{lakshminarayananSimpleScalablePredictive2017b}.
+
+The mean and variance of the predictive distribution can be used to construct error bands for regression models to visualize uncertainty. For classification, the predictive probabilities already serve as uncertainty measures, while specific summary statistics can be used to capture specific types of uncertainty \citep{gawlikowskiSurveyUQ2023}.
+
+\subsection{Aleatoric and Epistemic Uncertainty}
+\label{sec:uncertainty}
+
+The form of the predictive distribution \eqref{eq:predictive} motivates a dichotomy of sources of predictive uncertainty into two categories: \emph{data uncertainty}, captured by the likelihood term $p(y_* \given \vec{x}_*, \vec{\vec{\theta}})$, and \emph{model uncertainty}, captured by the posterior $p(\vec{\vec{\theta}} \given \mathcal{D})$ \citep{malininPredictiveUncertaintyEstimation2018}.
+
+Data uncertainty, also called \emph{aleatoric uncertainty}, arises from the inherent stochasticity of the data-generating process. In other words, the relationship between features and target is non-deterministic \citep{hullermeierAleatoricEpistemicUncertainty2021}. This is, e.g., due to random noise in measurements or human-labeling errors \citep{gawlikowskiSurveyUQ2023}. Model uncertainty, also called \emph{epistemic uncertainty}, arises from lack of knowledge \citep{hullermeierAleatoricEpistemicUncertainty2021}. On the one hand, multiple parameter settings lead to comparably good performance on the training set, but which one to choose is unclear; On the other hand, we do not know which model architecture is the most appropriate for the task at hand, giving rise to structure uncertainty \citep{galUncertaintyTypes2016}. The prior $p(\vec{\vec{\theta}})$ reflects structure uncertainty, as its dispersion is linked to the strength of regularization used in training. A weaker regularization corresponds to a wider prior and higher structure uncertainty.
+
+Sometimes, aleatoric uncertainty is characterized as irreducible, while epistemic uncertainty is considered reducible \citep{hullermeierAleatoricEpistemicUncertainty2021}. This terminology is questionable. For example, we can reduce aleatoric uncertainty due to measurement noise by using more precise measurement devices \citep{galUncertaintyTypes2016}. For example, if we are asked to predict a person's body height based on their gender, the aleatoric uncertainty is high, since people of the same gender vary a lot in height. However, as we gain more information about the person, such as body weight, age, etc., there are fewer and fewer possible individuals with the same traits. By gaining knowledge, we reduce aleatoric uncertainty. This example also illustrates that aleatoric and epistemic uncertainty are context-specific notions. As pointed out by \cite{hullermeierAleatoricEpistemicUncertainty2021}, categorizing uncertainty components into these two types is only possible with respect to a specific data-generating process and model class.
+

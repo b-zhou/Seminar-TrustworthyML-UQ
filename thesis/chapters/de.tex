@@ -1,0 +1,43 @@
+\section{Ensembles Methods}
+\label{sec:de}
+
+The loss surface of deep neural networks are non-convex. In particular, there are multiple local minima \cite{liVisualizingLossLandscape2018}. In light of the equivalence between regularized risk minimization and MAP estimation, this means the posterior of parameters possesses multiple modes. LA approximation does not account for this, but only locally approximate the posterior around a single mode. In constrast, \emph{Deep Ensembles} \citep{lakshminarayananSimpleScalablePredictive2017b} provide a multimodal view of the posterior.
+
+\subsection{Deep Ensembles}
+
+The multiple modes are obtained by training an ensemble of networks of the same architecture on the same dataset. To enable multimodal posterior approximation, we want different ensemble members to discover different modes. For a neural network ensemble, \cite{lakshminarayananSimpleScalablePredictive2017b} argue that random weight initialization and batch generation suffice as sources of  variability. By constrast, the traditional ensembling method of bootstrap can even harm performance \citep{livierisEnsembleTechniquesWeightconstrained2021}.
+
+Once an ensemble has been trained, we obtain a collection $\hat{\vec{\theta}}_1, \dots, \hat{\vec{\theta}}_m$ of parameter estimates, each of which can be interpreted as a posterior mode. We can interpret the empirical distribution of these parameter estimates as a posterior approximation. That is, the posterior is approximated by a sum of Dirac measures placed at the discovered modes. This approximation does not represent the shape of the posterior around any mode. However, it can be more meaningful than a single-mode alternative such as Laplace approximation, if the true posterior is highly multimodal.
+
+Using all the discovered modes as a sample from the posterior, we approximate the predictive distribution by Monte Carlo integration
+\begin{equation} \label{eq:ensemble}
+  p(y_* \given \vec{x}_*, \mathcal{D}) \approx \frac{1}{m} \sum_{i=1}^{m} p(y_* \given \vec{x}_*, \hat{\vec{\theta}}_i).
+\end{equation}
+
+To implement a Deep Ensemble, we simply train $m$ copies of the same network using different random seeds, and use them jointly for predictions and uncertainty quantification. Since the ensemble members are independently trained, parallelization is possible \citep{lakshminarayananSimpleScalablePredictive2017b}. Nevertheless, training $m$ networks is computationally expensive. Moreover, the parameters of $m$ networks must be stored at test time, creating a high storage space demand. These concerns render large ensembles impractical. \cite{lakshminarayananSimpleScalablePredictive2017b} suggest using ensembles of 5 or 10 models. Surprisingly, even such small ensembles achieve high performance in predictions and uncertainty quantification.
+
+It is worth mentioning that the Deep Ensemble method was originally proposed as a non-Bayesian approach \citep{lakshminarayananSimpleScalablePredictive2017b}. The Bayesian interpretation is due to \cite{wilsonBayesianDeepLearning2020}.
+
+\subsection{Symmetry of Modes}
+
+A multimodal approximation of the posterior per se does not guarantee a good quantification of predictive uncertainty. We argue in the following that in the worst case, an ensemble makes no improvement over a single network.
+
+Posterior modes of neural networks exhibits symmetry \citep{sommerConnectingDotsModeConnectedness2024b}. That is, two different modes $\vec{\theta}_1, \vec{\theta}_2$ may correspond to the same function $f(x; \vec{\theta}_1) = f(x; \vec{\theta}_2)$ that maps the feature space to the target space. For example, permuation of neurons within each hidden layer or scaling the weights by appropriate constants does not change the output of a fully-connected ReLU network \citep{grigsbyHiddenSymmetriesReLU2023}. 
+
+Training an ensemble of neural networks with random initialization allows to discover multiple modes, which, however, might parameterize the same function. In the likelihood term $p(y_* \given \vec{x}_*, \vec{\theta})$, $y_*$ depends on $\vec{x}_*$ and $\vec{\theta}$ through the network output $f(\vec{x}_*; \vec{\theta})$. If two parameters correspond to the same function, they yield the same likelihood. In the worst case, the parameters $\hat{\vec{\theta}}_1, \dots, \hat{\vec{\theta}}_m$ of all ensemble members correspond to the same function, so that the ensemble prediction
+\begin{equation*}
+  \frac{1}{m} \sum_{i=1}^{m} p(y_* \given \vec{x}_*, \hat{\vec{\theta}}_i) = p(y_* \given \vec{x}_*, \hat{\vec{\theta}}_1)
+\end{equation*}
+is no different than that of a single model.
+
+Luckily, the worst case is unlikely. \cite{fortDeepEnsemblesLoss2020} showed that training ensemble members with random initialization not only leads to different parameter estimates, but also a high functional diversity. Moreover, the authors observed that functions produced by parameters visited in a single optimization process remain similar, but the diversity is high across different training runs.
+
+\subsection{Less Expensive Alternatives}
+
+Extending standard SGD optimization, \cite{lakshminarayananSimpleScalablePredictive2017b} proposed employing adversarial training to improve the robustness of each ensemble member. This happens within the training procedure of each model and does not harm parallelizability.
+
+Furthermore, efforts have been made to lower the computational cost of neural network ensembles. \cite{valdenegro-toroDeepSubEnsemblesFast2019} proposed \emph{Deep Sub-Ensembles}, in which the ensemble members share the same weights in most layers except the last few. To construct a deep sub-ensemble, we first train a single network as usual, then keep the first layers fixed, and only re-train the last few layers multiple times to obtain the ensemble members. Sharing a larger subnetwork leads to worse prediction performance relative to the standard Deep Ensemble, but the trade-off can be controlled by the user \citep{valdenegro-toroDeepSubEnsemblesFast2019}.
+
+\emph{BatchEnsemble} \citep{wenBatchEnsembleAlternativeApproach2019} is another approach to simplifying Deep Ensembles. Instead of sharing a subnetwork, this method introduces a layer-wise weight sharing mechanism. Suppose that the weights in a layer can be arranged into an $k \times l$ matrix. Then for each ensemble member $i = 1,\dots,m$, the weights are generated by an elementwise product of a shared weight matrix $\mat{W} \in \RR^{k \times l}$ and a member-specific rank one matrix $\mat{F}_i = \vec{s}_i \vec{r}_i^\T$ with $\vec{s}_i \in \RR^k$ and $\vec{r}_i \in \RR^l$. Without weight sharing, we need to store $m k l$ weights for this layer across the ensemble. With weight sharing, we only need to store $k l + m(k + l)$ weights. The number of stored weights reduces from a cubic function of $m,k,l$ to a quadratic one. The weight sharing mechanism makes parallel training of ensemble members necessary \citep{gawlikowskiSurveyUQ2023}. However, this can be carried out per mini-batch without much memory overhead \citep{wenBatchEnsembleAlternativeApproach2019}. 
+
+

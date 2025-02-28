@@ -223,6 +223,7 @@ INPUT ./images/classif_mc_dropout.pdf
 INPUT ./images/regr_comparison.pdf
 INPUT ./images/regr_comparison.pdf
 INPUT ./chapters/conclusion.tex
+INPUT /home/bszh/.TinyTeX/texmf-var/luatex-cache/generic/fonts/otl/lmmono12-regular.luc
 INPUT ./thesis.bbl
 INPUT ./thesis.aux
 INPUT /home/bszh/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb

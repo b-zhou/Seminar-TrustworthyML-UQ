@@ -1,13 +1,14 @@
 # Fdb version 4
-["bibtex thesis"] 1740784664.65647 "thesis.aux" "thesis.bbl" "thesis" 1740784667.0675 0
+["bibtex thesis"] 1740784664.65647 "thesis.aux" "thesis.bbl" "thesis" 1740785770.2891 0
   "./bibliography.bib" 1740783166.75593 18720 29b3753474e4f6b7d22b9b7de5fc04ad ""
   "/home/bszh/.TinyTeX/texmf-dist/bibtex/bst/harvard/dcu.bst" 1233413381 25669 0768d98a028900c057124e4d82e12771 ""
-  "thesis.aux" 1740784666.92194 16235 7b1a684a2a183bd7715f154c19d3fa59 "lualatex"
+  "thesis.aux" 1740785770.12414 16235 7b1a684a2a183bd7715f154c19d3fa59 "lualatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["lualatex"] 1740784664.68453 "/home/bszh/seminar/thesis/thesis.tex" "thesis.pdf" "thesis" 1740784667.06768 0
+["lualatex"] 1740785767.80034 "/home/bszh/seminar/thesis/thesis.tex" "thesis.pdf" "thesis" 1740785770.28921 0
+  "/home/bszh/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono12-regular.otf" 1255129361 63012 5db69ad3c177ae338e5504d80d9e9eb6 ""
   "/home/bszh/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf" 1255129361 111240 0af0b64d6d3df41bead3f9de314afbd4 ""
   "/home/bszh/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf" 1255129361 111536 ae9d1b331000d544f47e5223081b7b54 ""
   "/home/bszh/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf" 1255129361 110496 b9c8767d4cc3bf3f4b21f676bf89aa78 ""
@@ -193,6 +194,7 @@
   "/home/bszh/.TinyTeX/texmf-dist/tex/luatex/luaotfload/luaotfload-unicode.lua" 1709155629 7917 cebc6454abe34f2fe1c1248f8b2453da ""
   "/home/bszh/.TinyTeX/texmf-dist/tex/luatex/luaotfload/luaotfload.lua" 1709155629 13565 50482dad4c221a79dbdbb982122baf8c ""
   "/home/bszh/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1735850658 1050483 810599714026294adb585a0c0a12f1b0 ""
+  "/home/bszh/.TinyTeX/texmf-var/luatex-cache/generic/fonts/otl/lmmono12-regular.luc" 1736440351.63687 81768 eb352e8dfeb80f2523a27b03776fc904 ""
   "/home/bszh/.TinyTeX/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bold.luc" 1736440293.63618 128406 b806760649128a9ff4fe611328c93b99 ""
   "/home/bszh/.TinyTeX/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-regular.luc" 1736440293.23618 127323 0a947bce0f69398d91ba3d1796da95c9 ""
   "/home/bszh/.TinyTeX/texmf-var/luatex-cache/generic/fonts/otl/lmroman12-bold.luc" 1736440335.24377 128295 cacbec23eafcc06d0286c3c98e381b88 ""
@@ -203,11 +205,11 @@
   "/home/bszh/.TinyTeX/texmf-var/luatex-cache/generic/fonts/otl/lmroman7-regular.luc" 1736440335.36377 128371 2427f31601afbbc1f4ef0e938211fde4 ""
   "/home/bszh/.TinyTeX/texmf-var/luatex-cache/generic/fonts/otl/lmroman8-regular.luc" 1736440351.21687 128142 4d8ea3f23f0147232c773d3609b15aa9 ""
   "/home/bszh/.TinyTeX/texmf-var/web2c/luahbtex/lualatex.fmt" 1735850532 5654256 2c77b5c8b124d7445f9dce5ba9084c2c ""
-  "/home/bszh/seminar/thesis/thesis.tex" 1740779368.98507 5352 99ac206e68fd1d2462d35b2da62771ad ""
+  "/home/bszh/seminar/thesis/thesis.tex" 1740785762.73512 5431 082b51c8a024662d161d13696ea89536 ""
   "chapters/bayes.tex" 1740784457.43067 14674 3ff51c0f2c4dcb97a3ad6236fbc08c72 ""
   "chapters/conclusion.tex" 1740781843.31451 2493 98e49c5f51ea973a1d5345219e10ac71 ""
   "chapters/de.tex" 1740784151.35487 7090 9b6abdafe6fa010b78ec27987402a5db ""
-  "chapters/dropout.tex" 1740784661.85852 7445 9e393cc1b3719f660b2ee3abf8b642ef ""
+  "chapters/dropout.tex" 1740784681.12186 6119 04ebfdfd3d85eb6a3949ec6b7873977b ""
   "chapters/experiments.tex" 1740784207.51338 7265 89c2746b3a292b0e3cabccdff574f285 ""
   "chapters/intro.tex" 1740784395.13629 2525 9d970df8422db2792a4f8fe0d50a36e8 ""
   "chapters/la.tex" 1740784499.52159 10544 9032d3c03e6996b102d429319ccf344a ""
@@ -218,11 +220,11 @@
   "images/regr_comparison.pdf" 1740772981.88792 26187 72e4751c8921b06ae95157eb5f8a58cf ""
   "macros.tex" 1740687310.25903 955 88e6cbe558b4fd26882b3399d494fdd0 ""
   "sigillum.png" 1732719019.8708 320585 57131ef3bcfba901e575bf6769aac43e ""
-  "thesis.aux" 1740784666.92194 16235 7b1a684a2a183bd7715f154c19d3fa59 "lualatex"
+  "thesis.aux" 1740785770.12414 16235 7b1a684a2a183bd7715f154c19d3fa59 "lualatex"
   "thesis.bbl" 1740784664.67194 13581 384c13fa140cb34e9000061f73626038 "bibtex thesis"
-  "thesis.out" 1740784666.92194 3966 e1f8f07d65c2a9bed0b1af1685016d81 "lualatex"
-  "thesis.tex" 1740779368.98507 5352 99ac206e68fd1d2462d35b2da62771ad ""
-  "thesis.toc" 1740784666.92194 1972 a75a8b424fc02c05866ae4f4a56c4f6a "lualatex"
+  "thesis.out" 1740785770.12414 3966 e1f8f07d65c2a9bed0b1af1685016d81 "lualatex"
+  "thesis.tex" 1740785762.73512 5431 082b51c8a024662d161d13696ea89536 ""
+  "thesis.toc" 1740785770.12414 1972 a75a8b424fc02c05866ae4f4a56c4f6a "lualatex"
   (generated)
   "thesis.aux"
   "thesis.log"
